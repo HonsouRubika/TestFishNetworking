@@ -54,6 +54,13 @@ MonoBehaviour:
   _networkObjectCache: {fileID: 1686596118388588529}
   _initMode: 0
   _firstState: {fileID: 1686596118388588535}
+  _nbMarblesP1: 10
+  _nbMarblesP2: 10
+  _currentBet: 0
+  _currentIsOdd: 0
+  _didBet: 0
+  _playerOrder: 0
+  _winner: -1
   _gameStarted: 0
   _playerTurn: {fileID: 1686596118388588532}
 --- !u!114 &1686596118388588535
@@ -102,7 +109,7 @@ MonoBehaviour:
   _knocksClips: []
   _miTurnClip: {fileID: 0}
   _fullTurnClip: {fileID: 0}
-  _turnIndicatorUI: {fileID: 0}
+  _inGameUI: {fileID: 0}
 --- !u!114 &1686596118388588529
 MonoBehaviour:
   m_ObjectHideFlags: 0

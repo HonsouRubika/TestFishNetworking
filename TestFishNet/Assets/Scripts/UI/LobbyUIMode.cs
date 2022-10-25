@@ -75,7 +75,7 @@ namespace Seance.UI.Lobby
 			if (!_isHost)
 				return;
 
-			if (_lobby._connectionCount == 3)
+			if (_lobby._connectionCount == 2)
 				_startGameButton.SetActive(true);
 			else
 				_startGameButton.SetActive(false);

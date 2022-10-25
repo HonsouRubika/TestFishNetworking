@@ -44,6 +44,18 @@ namespace Seance.Networking
 		//Number of client set up and ready to start
 		int _readyCount = 0;
 
+
+		//in game var
+		public int _nbMarblesP1 = 10;
+		public int _nbMarblesP2 = 10;
+
+		public int _currentBet = 0;
+		public bool _currentIsOdd = false;
+		public bool _didBet = false;
+
+		public int _playerOrder = 0;
+		public int _winner = -1;
+
 		#region Singleton
 
 		public static LobbyManager Instance;
@@ -67,7 +79,7 @@ namespace Seance.Networking
 
 			ObserversUpdatePlayerCount(_serverConnections.Count);
 
-			if (_serverConnections.Count == 3)
+			if (_serverConnections.Count == 2)
 			{
 				foreach (NetworkConnection connection in _serverConnections)
 				{
@@ -116,6 +128,8 @@ namespace Seance.Networking
 			OnClientSetup?.Invoke();
 		}
 
+
+
 		[ServerRpc(RequireOwnership = false)]
 		public void ServerAddPlayerReady()
 		{
@@ -124,7 +138,7 @@ namespace Seance.Networking
 
 			_readyCount++;
 
-			if (_readyCount == 3)
+			if (_readyCount == 2)
 				ObserversStartGame();
 		}
 
@@ -136,5 +150,82 @@ namespace Seance.Networking
 		}
 
 		#endregion
+
+		/*
+		#region In Game
+
+		[ServerRpc(RequireOwnership = false)]
+		public void ServerSetResultBetter(int nbMarblesBet)
+		{
+			_currentBet = nbMarblesBet;
+		}
+
+		[ObserversRpc]
+		public void ObserversUpdateVarP1()
+		{
+			
+		}
+
+		[ServerRpc(RequireOwnership = false)]
+		public void ServerSetResultIsOdd(bool isOdd)
+		{
+			_currentIsOdd = isOdd;
+		}
+
+		[ServerRpc(RequireOwnership = false)]
+		public void ServerGetResult()
+		{
+			if ((_currentBet % 2 == 1 && _currentIsOdd) || _currentBet % 2 == 0 && !_currentIsOdd)
+			{
+				//better looses
+				if (_playerOrder == 0)
+				{
+					_nbMarblesP2 += _currentBet;
+					_nbMarblesP1 -= _currentBet;
+					_winner = 1;
+				}
+				else
+				{
+					_nbMarblesP1 += _currentBet;
+					_nbMarblesP2 -= _currentBet;
+					_winner = 0;
+				}
+			}
+			else
+			{
+				//better wins
+				if (_playerOrder == 0)
+				{
+					_nbMarblesP1 += _currentBet;
+					_nbMarblesP2 -= _currentBet;
+					_winner = 0;
+				}
+				else
+				{
+					_nbMarblesP2 += _currentBet;
+					_nbMarblesP1 -= _currentBet;
+					_winner = 1;
+				}
+			}
+		}
+
+		[ServerRpc(RequireOwnership = true)]
+		public void ServerChangeTurnOrder()
+		{
+			Debug.LogError("ServerPlayNextTurn : " + _playerOrder);
+			_playerOrder++;
+			if (_playerOrder > 1)
+			{
+				_playerOrder = 0;
+			}
+
+			_currentBet = 0;
+			_currentIsOdd = false;
+			_didBet = false;
+			_winner = -1;
+		}
+
+		#endregion
+		*/
 	}
 }

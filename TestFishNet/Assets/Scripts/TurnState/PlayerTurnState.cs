@@ -29,15 +29,7 @@ namespace Seance.TurnSystem
 		[SerializeField] AudioClip _fullTurnClip;
 
 		//UI
-		[SerializeField] GameObject _turnIndicatorUI;
-
-		//Game
-		public int _nbMarblesP1 = 10;
-		public int _nbMarblesP2 = 10;
-		//
-		public int _nbMarblesBetted = 1; //P1
-		public bool _isbetOdd = false;   //P2
-		public bool _didBet = false;
+		[SerializeField] GameUI _inGameUI;
 
 		//CountdownTimer _miTurnTimer = new();
 		//CountdownTimer _fullTurnTimer = new();
@@ -53,32 +45,44 @@ namespace Seance.TurnSystem
 		{
 			if (!_machine.IsPlaying)
 			{
-				_turnIndicatorUI.SetActive(false);
 				return;
 			}
 
-			_nbMarblesBetted = 0;
-			_isbetOdd = false;
-			_didBet = false;
+			//Debug.LogError("player : " + _lobby._ownedConnectionReferencePosition + " , num " + _machine._playerOrder);
 
-			_turnIndicatorUI.SetActive(true);
+			//activate UI
+			if(_lobby._ownedConnectionReferencePosition == 0 && _machine._playerOrder == 0)
+            {
+				//Debug.LogError("1");
+				_inGameUI.InitP1(_machine._nbMarblesP1);
+            }
+			else if(_lobby._ownedConnectionReferencePosition == 0 && _machine._playerOrder == 1)
+            {
+				//Debug.LogError("2");
+				_inGameUI.InitP2(_machine._nbMarblesP1);
+            }
+			else if (_lobby._ownedConnectionReferencePosition == 1 && _machine._playerOrder == 0)
+			{
+				//Debug.LogError("3");
+				_inGameUI.InitP2(_machine._nbMarblesP2);
+			}
+			else if (_lobby._ownedConnectionReferencePosition == 1 && _machine._playerOrder == 1)
+			{
+				//Debug.LogError("4");
+				_inGameUI.InitP1(_machine._nbMarblesP2);
+			}
+
 		}
 
 		public void SetPlayer2Bet(bool isOdd)
         {
-			_isbetOdd = isOdd;
-			_didBet = true;
-
-			if (_didBet && _nbMarblesBetted > 0)
-				EndTurn();
+			//Debug.LogError("click on bet button");
+			_machine.ServerSetPlayer2Bet(isOdd);
         }
 
 		public void SetNumberMarblesBetted(int nbMarblesBetted)
         {
-			_nbMarblesBetted = nbMarblesBetted;
-
-			if (_didBet && _nbMarblesBetted > 0)
-				EndTurn();
+			_machine.ServerSetNumberMarblesBetted(nbMarblesBetted);
 		}
 
 		public void OnClick(InputAction.CallbackContext context)
@@ -107,13 +111,14 @@ namespace Seance.TurnSystem
 
 		public void EndTurn()
 		{
+			//Debug.LogError("end turn");
 			if (!_machine.IsPlaying)
 				return;
 
 			//_miTurnTimer.Cancel();
 			//_fullTurnTimer.Cancel();
 
-			_machine.ServerPlayNextTurn();
+			_machine.ServerGetResult();
 		}
 
 		public void PlayerKnocks()

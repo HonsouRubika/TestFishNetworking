@@ -85,7 +85,7 @@ namespace Seance.Player
 
 			int positionIndex = _lobby._ownedConnectionReferencePosition;
 
-			for (int i = 0; i < 3; i++)
+			/*for (int i = 0; i < 3; i++)
 			{
 				//_lobby._playerInstances[positionIndex].transform.position = _levelReferences._playersTransform[i].position;
 				//_lobby._playerInstances[positionIndex].transform.rotation = _levelReferences._playersTransform[i].rotation;
@@ -94,7 +94,7 @@ namespace Seance.Player
 				positionIndex++;
 				if (positionIndex > 2)
 					positionIndex = 0;
-			}
+			}*/
 
 			//Set starting deck for this player
 

@@ -26,12 +26,14 @@ namespace Seance.TurnSystem
 
 			//set starting player or switch players roles
 
-			if (_machine.IsServer)
+			/*if (_machine.IsServer)
 			{
 				_sequencer.Append(1f, () => _machine.ServerPlayNextTurn());
 			}
 
-			_sequencer.Play();
+			_sequencer.Play();*/
+
+			_machine.ServerPlayNextTurn();
 
 			//if (!_machine._gameStarted)
 			//    _machine._currentChapter = _machine._gameStartChapterCards.PickRandom();

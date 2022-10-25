@@ -46,13 +46,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e88ab5fcf01f704a9bf4b3f45062af5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 0
   _addedNetworkObject: {fileID: 1639423342698695604}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 1639423342698695604}
   _ownedConnectionReferencePosition: 0
   _playerInstances: []
   _ownedPlayerInstance: {fileID: 0}
   _connectionCount: 0
+  _nbMarblesP1: 10
+  _nbMarblesP2: 10
+  _currentBet: 0
+  _currentIsOdd: 0
+  _didBet: 0
+  _playerOrder: 0
+  _winner: -1
 --- !u!114 &1639423342698695604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,14 +74,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <IsNested>k__BackingField: 0
   <ComponentIndex>k__BackingField: 0
-  _networkBehaviours: []
+  _networkBehaviours:
+  - {fileID: 1639423342698695605}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
   _isGlobal: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: -1
+  <PrefabId>k__BackingField: 3
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 9468712030806755566
